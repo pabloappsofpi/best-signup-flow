@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+<!--head-->
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.16.1/firebase-app.js"></script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.17.0/firebase-auth.js"></script>
+
+
+<script>
+  // Your web app's Firebase configuration
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Transaction emails</title>
+  </head>
+  <body>
+    <!-- As a link -->
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">Home: <strong>Admin</strong> Login to Work</a>
+
+  <div class="form-inline my-2 my-lg-0">
+    <button id="signIn" class="btn btn-outline-danger my-2 my-sm-0" onclick="signOut()" >Not Sign In</button>
+  </div>
+</nav>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+     
+      <div class="jumbotron">
+        <p class="lead">Sign In to Admin.</p>
+      </div>
+
+    </div>
+    <div class="col-sm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+          <small id="emailHelp" class="form-text text-muted">Login to take full control.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="password">
+        </div>
+      
+        <button onclick="signInWithEmailAndPassword()" class="btn btn-primary">Sign In</button>
+    
+    </div>
+    <div class="col-sm">
+
+      
+    </div>
+  </div>
+
+<!--Replier email-->
+
+
+
+
+</div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  
+  <script>
+    function signInWithEmailAndPassword(){
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
+  // Handle Errors here.
+  var errorCode = error.code;
+  var errorMessage = error.message;
+  // ...
+});
+    }
+ 
+// if auth
+var signedInB = false;
+firebase.auth().onAuthStateChanged(function(user) {
+  if (user) {
+    // User is signed in.
+    document.getElementById("signIn").className = "btn btn-outline-warning my-2 my-sm-0";
+    document.getElementById("signIn").innerHTML = "Sign Out";
+    console.log("signed in");
+    signedInB = true;
+  } else {
+    // No user is signed in.
+    document.getElementById("signIn").className = "btn btn-outline-danger my-2 my-sm-0";
+    document.getElementById("signIn").innerHTML = "Not Sign In";
+    console.log("not signed in");
+    signedInB = false;
+
+  }
+});
+
+function signOut(){
+if (signedInB){
+  firebase.auth().signOut().then(function() {
+  console.log('Signed Out');
+}, function(error) {
+  console.error('Sign Out Error', error);
+});
+}
+}
+
+  </script>
+  </body>
+
+</html>
